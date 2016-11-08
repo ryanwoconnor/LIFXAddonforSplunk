@@ -23,7 +23,7 @@ def get_devices(access_token):
         req = requests.get('https://api.lifx.com/v1/lights/all',headers={'Authorization': 'Bearer '+access_token})
         for line in req.iter_lines():
                 output_str = line
-		if 'Oops' in output_str:
+		if 'html' in output_str:
 			continue
 		output_str = output_str.replace(output_str[:1],'')
 		output_str = output_str[:-1]
