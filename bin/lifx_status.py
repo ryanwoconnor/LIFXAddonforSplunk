@@ -23,12 +23,16 @@ def get_devices(access_token):
         req = requests.get('https://api.lifx.com/v1/lights/all',headers={'Authorization': 'Bearer '+access_token})
         for line in req.iter_lines():
                 output_str = line
-		if 'html' in output_str:
-			continue
-		output_str = output_str.replace(output_str[:1],'')
-		output_str = output_str[:-1]
+                if 'html' in output_str:
+                        continue
+                if 'Oops' in output_str:
+                        continue
+                if 'head<title>' in output_str:
+                        continue
+                output_str = output_str.replace(output_str[:1],'')
+                output_str = output_str[:-1]
                 output_str = output_str.replace('},{','}\r\n{')
-		sys.stdout.write(output_str)
+                sys.stdout.write(output_str+'\r\n')
         return True
 
 #Set stdout to Unbuffered Version
