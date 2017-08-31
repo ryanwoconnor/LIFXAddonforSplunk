@@ -32,7 +32,6 @@ def get_devices(access_token):
 
                 output_str = output_str.replace(']','')
                 output_str = output_str.replace('[','')
-                #output_str = output_str.replace('},','}\r\n')
                 sys.stdout.write(output_str+'\r\n')
         return True
 
