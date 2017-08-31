@@ -29,9 +29,9 @@ def get_devices(access_token):
                         continue
                 if 'head<title>' in output_str:
                         continue
-                output_str = output_str.replace(output_str[:1],'')
-                output_str = output_str[:-1]
-                output_str = output_str.replace('},{','}\r\n{')
+
+                output_str = output_str.replace(']','')
+                output_str = output_str.replace('[','')
                 sys.stdout.write(output_str+'\r\n')
         return True
 
@@ -48,4 +48,4 @@ for item in settings.iteritems():
         for key in item[1].iteritems():
                 token = key[1]
                 #Create a new process for each access_token
-                get_devices(token)                                     
+                get_devices(token)
