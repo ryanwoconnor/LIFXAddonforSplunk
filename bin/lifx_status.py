@@ -21,18 +21,11 @@ class Unbuffered:
 
 def get_devices(access_token):
         req = requests.get('https://api.lifx.com/v1/lights/all',headers={'Authorization': 'Bearer '+access_token})
-        for line in req.iter_lines():
-                output_str = line
-                if 'html' in output_str:
-                        continue
-                if 'Oops' in output_str:
-                        continue
-                if 'head<title>' in output_str:
-                        continue
-                output_str = output_str.replace(output_str[:1],'')
-                output_str = output_str[:-1]
-                output_str = output_str.replace('},{','}\r\n{')
-                sys.stdout.write(output_str+'\r\n')
+        jsonLights = json.loads(req.text)
+
+        for light in jsonLights:
+                sys.stdout.write(json.dumps(light)+'\r\n')
+                sys.stdout.write('\r\n')
         return True
 
 #Set stdout to Unbuffered Version
@@ -48,4 +41,4 @@ for item in settings.iteritems():
         for key in item[1].iteritems():
                 token = key[1]
                 #Create a new process for each access_token
-                get_devices(token)                                     
+                get_devices(token)
